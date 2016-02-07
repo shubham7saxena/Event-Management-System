@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap-fluid-adj.css'%} " rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet" media="screen">
+    <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
+    
+    <title>Event management System</title>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('send', 'pageview');
+
+  </script>
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/registeration/">Home</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-right">
+                    {% if user.is_authenticated %}
+                    <li class="navbar-text">Welcome, {{ user.username }}!</li>
+                    <li><a href="/registeration/profile/">Profile</a></li>
+                    <li><a href="/registeration/logout/">Logout</a></li>
+                        {% else %}
+
+                    <li><a href="/registeration/register/">Register</a></li>
+                    <li><a href="/registeration/login/">Login</a></li>
+
+                    {% endif %}
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!--span-->
+        <div class="span12">
+
+            {% block body_block %}
+            {% endblock %}
+
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+
+</div>
+<!--/.fluid-container-->
+
+<script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/registeration-ajax.js' %}"></script>
+
+</body>
+</html>
+
