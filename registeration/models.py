@@ -18,9 +18,17 @@ class event(models.Model):
 	event_coordi = models.CharField(max_length=50)
 	contact_id_coordinator = models.EmailField()
 	event_description = models.TextField()
+	participants = models.ManyToManyField(UserProfile)
 
 	def publish(self):
 		self.save()
 
-	def __str__(self):
+	def __unicode__(self):
 		return self.name
+
+class notification(models.Model):
+	title = models.CharField(max_length=20)
+	content = models.TextField(max_length=70)
+	
+	def __str__(self):
+		return self.title

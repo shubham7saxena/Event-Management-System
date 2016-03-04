@@ -8,9 +8,9 @@
        
        {% if userprofile %}
 	   <p>Website: <a href="{{ userprofile.website }}">{{userprofile.website}}</a></p>
-           <br/>
+       <br/>
        {% if userprofile.picture %}
-	   <img src="{{ userprofile.picture.url }}"  />
+	   <img src="{{ userprofile.picture.url }}" height = "250" width = "250" class = "img-rounded" border-radius : "50%"/>
 	   {% endif %}
 	   {% endif %}
 </div>

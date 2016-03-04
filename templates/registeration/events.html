@@ -1,0 +1,19 @@
+{% extends "registeration/base.html" %}
+
+{% block body_block %}
+
+<h2>List of Events:</h2>
+<div class="hero-unit">
+	<form>
+	{% for event in events%}
+		<div>
+			<strong> {{ event.name }} </strong>
+			<p> {{ event.event_description }} </p>
+			<p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p>
+		</div>
+		<br>
+	{% endfor %}
+	</form>
+</div>
+
+{% endblock %}

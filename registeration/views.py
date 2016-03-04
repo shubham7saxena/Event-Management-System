@@ -1,7 +1,7 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from registeration.models import UserProfile
+from registeration.models import *
 from registeration.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
@@ -81,6 +81,7 @@ def register(request):
 def user_login(request):
 
     context = RequestContext(request)
+    context_dict = {}
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -95,10 +96,11 @@ def user_login(request):
                 return render_to_response('registeration/login.html', context)
         else:
             print "Invalid login details: {0}, {1}".format(username, password)
-            return render_to_response('registeration/login.html', context)
+            context_dict['bad_details'] = True
+            return render_to_response('registeration/login.html', context_dict, context)
 
     else:
-        return render_to_response('registeration/login.html', context)
+        return render_to_response('registeration/login.html', context_dict, context)
 
 @login_required
 def user_logout(request):
@@ -110,28 +112,23 @@ def user_logout(request):
 @login_required
 def profile(request):
     context = RequestContext(request)
+    context_dict = {}
     u = User.objects.get(username=request.user)
-    
+
     try:
         up = UserProfile.objects.get(user=u)
     except:
         up = None
-    
-    return render_to_response('registeration/profile.html', context)
 
-def track_url(request):
+    context_dict['user'] = u
+    context_dict['userprofile'] = up
+    return render_to_response('registeration/profile.html', context_dict, context)
+
+@login_required
+def events(request):
     context = RequestContext(request)
-    page_id = None
-    url = '/registeration/'
-    if request.method == 'GET':
-        if 'page_id' in request.GET:
-            page_id = request.GET['page_id']
-            try:
-                page = Page.objects.get(id=page_id)
-                page.views = page.views + 1
-                page.save()
-                url = page.url
-            except:
-                pass
+    context_dict = {}
+    event_list = event.objects.all()
+    context_dict['events'] = event_list
 
-    return redirect(url)
+    return render_to_response('registeration/events.html',context_dict,context)

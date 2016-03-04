@@ -11,12 +11,6 @@ TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
 STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'registeration.db')
 
-# Printing paths for sanity's sake
-print "Settings directory:", SETTINGS_DIR
-print "Project root:", PROJECT_PATH
-print "Templates:", TEMPLATE_PATH
-print "Static:", STATIC_PATH
-print "DB:", DATABASE_PATH
 
 LOGIN_URL = '/registeration/login/'
 
@@ -142,6 +136,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'registeration',
+    'pinax.notifications',
+    'chance',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
