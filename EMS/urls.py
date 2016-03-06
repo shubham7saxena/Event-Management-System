@@ -8,8 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',    
     url(r'^registeration/', include('registeration.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r"^notifications/", include('pinax.notifications.urls')),
-    url(r"^chance/",include('chance.urls')),
+    #url(r'^quiz/', include('quiz.urls')),
 )
 
 if settings.DEBUG:

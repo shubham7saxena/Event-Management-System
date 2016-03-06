@@ -7,11 +7,14 @@
 	<form>
 	{% for event in events%}
 		<div>
-			<strong> {{ event.name }} </strong>
-			<p> {{ event.event_description }} </p>
-			fvkndlkvnlkcn lkcn lc 
+			<a href="{% url "events_event_detail" event.pk %}">{{ event.name }}</a>
 			<p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p>
 			{% if event.participants %}
+
+				
+				<p> First Time Preference:{{event.first_time_preference}}</p>
+				<p> Actual Timing:{{event.Actual_time}}</p>
+
 				{% for field in participant_list %}
 				<p> {{ field.website }} </p>
 				{% endfor %}

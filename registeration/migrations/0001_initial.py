@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='event',
+            name='Event',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
@@ -21,17 +21,18 @@ class Migration(migrations.Migration):
                 ('event_coordi', models.CharField(max_length=50)),
                 ('contact_id_coordinator', models.EmailField(max_length=75)),
                 ('event_description', models.TextField()),
+                ('participants', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='notification',
+            name='EventUserRegistration',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=20)),
-                ('content', models.TextField(max_length=70)),
+                ('event', models.ForeignKey(to='registeration.Event')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -48,11 +49,5 @@ class Migration(migrations.Migration):
             options={
             },
             bases=(models.Model,),
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='participants',
-            field=models.ForeignKey(to='registeration.UserProfile'),
-            preserve_default=True,
         ),
     ]

@@ -16,13 +16,4 @@ class Migration(migrations.Migration):
             name='contact_id_coordinator',
             field=models.EmailField(max_length=254),
         ),
-        migrations.RemoveField(
-            model_name='event',
-            name='participants',
-        ),
-        migrations.AddField(
-            model_name='event',
-            name='participants',
-            field=models.ManyToManyField(to='registeration.UserProfile'),
-        ),
     ]

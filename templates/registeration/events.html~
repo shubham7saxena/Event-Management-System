@@ -9,7 +9,6 @@
 		<div>
 			<strong> {{ event.name }} </strong>
 			<p> {{ event.event_description }} </p>
-			fvkndlkvnlkcn lkcn lc 
 			<p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p>
 			{% if event.participants %}
 				{% for field in participant_list %}

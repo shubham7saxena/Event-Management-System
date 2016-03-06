@@ -1,6 +1,7 @@
 from django.contrib import admin
 from registeration.models import *
+#from events.models import *
 
 admin.site.register(UserProfile)
-admin.site.register(event)
-admin.site.register(notification)
+admin.site.register(Event)
+admin.site.register(EventUserRegistration)
