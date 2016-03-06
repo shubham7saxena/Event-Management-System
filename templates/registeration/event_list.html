@@ -3,27 +3,46 @@
 {% block body_block %}
 
 <h2>List of Events:</h2>
+
+<style type="text/css">
+.hero-unit {
+  padding-top: -0px; !important 
+  padding: 60px; /* default is 60px; */
+}</style>
 <div class="hero-unit">
-	<form>
+	<table class="table table-bordered">
+	<thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Contact </th>
+        <th>1st Prefernce </th>
+        <th>Actual Timings </th>
+      </tr>
+    </thead>
 	{% for event in events%}
-		<div>
-			<a href="{% url "events_event_detail" event.pk %}">{{ event.name }}</a>
-			<p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p>
+		<!-- <div> -->
+
+			<tr>
+			<td><a href="{% url "events_event_detail" event.pk %}">{{ event.name }}</a></td>
+			<td><p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p></td>
 			{% if event.participants %}
 
-				<p>participants: {{event.participants}}</p>
+				<!-- <p>participants: {{event.participants}}</p> -->
 
-				<p> First Time Preference:{{event.first_time_preference}}</p>
-				<p> Actual Timing:{{event.Actual_time}}</p>
+				<td> First Time Preference:{{event.first_time_preference}}</td>
+				<td> Actual Timing:{{event.Actual_time}}</td>
+<!-- 
+				{% for field in event.participants.all %}
+				<p> {{ field.user.username }}</p>
+				{% endfor %} -->
 
-				{% for field in participant_list %}
-				<p> {{ field.website }} </p>
-				{% endfor %}
 			{% endif %}
-		</div>
+
+			</tr>
+		<!-- </div> -->
 		<br>
 	{% endfor %}
-	</form>
+	</table>
 </div>
 
 {% endblock %}

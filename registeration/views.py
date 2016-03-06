@@ -16,6 +16,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView
 from django.contrib import messages
 import Bpm
+from .models import Profile, Event
 
 def encode_url(str):
     return str.replace(' ', '_')
@@ -123,7 +124,7 @@ def profile(request):
     u = User.objects.get(username=request.user)
 
     try:
-        up = UserProfile.objects.get(user=u)
+        up = Profile.objects.get(user=u)
     except:
         up = None
 
@@ -188,3 +189,15 @@ class EventUserRegisterView(RedirectView):
 
         return super(EventUserRegisterView, self).dispatch(request,
                                                            *args, **kwargs)
+
+def user_register(request):
+    xx = User.objects.get(username = request.user)
+    
+    print xx.profile
+    pk = request.GET.get('pk', '') 
+    print pk
+    x = Event.objects.get(pk = pk)
+    x.participants.add(xx.profile)
+    x.save()
+    return HttpResponse(1)
+    pass

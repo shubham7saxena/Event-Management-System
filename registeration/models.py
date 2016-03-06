@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 
-class UserProfile(models.Model):
+class Profile(models.Model):
 	# A required line - links a UserProfile to User.
 	user = models.OneToOneField(User)
 	
@@ -27,7 +27,7 @@ class Event(models.Model):
 	event_coordi = models.CharField(max_length=50)
 	contact_id_coordinator = models.EmailField()
 	event_description = models.TextField()
-	participants = models.ManyToManyField('auth.User')
+	participants = models.ManyToManyField(Profile)
 
 	def register_user(self,user):
 		registration = EventUserRegistration(event=self, user=user)
@@ -45,7 +45,7 @@ class EventUserRegistration(models.Model):
     Represents a user's registration to the event.
     """
     event = models.ForeignKey(Event)
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(Profile)
 
     def __unicode__(self):
         return (self.user.__unicode__() + unicode(_(" registered for ")) +

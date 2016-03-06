@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from registeration.models import UserProfile
+from registeration.models import Profile
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(help_text="Please enter a username.")
@@ -17,5 +17,5 @@ class UserProfileForm(forms.ModelForm):
     picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
 
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = ('website', 'picture')

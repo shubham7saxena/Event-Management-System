@@ -2,13 +2,41 @@
 
 {% block body_block %}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $("#btn1").click(function(){
+        console.log("Aman");
+        var x = $('#hidden').text();
+        console.log(x);
+
+        data_passed = {
+                    pk: x
+                };
+                $.get('/registeration/user_register/', data_passed, function () {
+                    var new_url = window.location.href;
+                    new_url = new_url.slice(0, -8);
+                    // window.location = new_url;
+                    alert("Successfully Registered.");
+                });
+
+    });
+});
+</script>
+
 <h2>{{ event.name }}</h2>
 <div class="hero-unit">
 	<i>{{ event.event_description }}</i>
-
-				<p> First Time Preference:{{event.first_time_preference}}</p>
-				<p> Actual Timing:{{event.Actual_time}}</p>
+		<p> First Time Preference:{{event.first_time_preference}}</p>
+		<p> Actual Timing:{{event.Actual_time}}</p>
 	<br>
-	<a href="{% url 'events_event_user_registration' event_id=event.pk %}"> Register for {{ event.name}} </a>
+	<p hidden id="hidden"> {{event.pk}} </p>
+	<button id="btn1">Register</button>
+
 </div>
 {% endblock %}
+
+
+

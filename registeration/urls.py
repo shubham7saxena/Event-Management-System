@@ -3,14 +3,16 @@ from registeration import views
 from .views import (EventDetailView,EventUserRegisterView)
 
 urlpatterns = patterns('',
-	url(r'^$', views.index, name='index'),
-	url(r'^events/$', views.events, name='events'),
+    url(r'^$', views.index, name='index'),
+    # url(r'^events/$', views.events, name='events'),
     url(r'^register/$', views.register, name='register'),
-	url(r'^login/$', views.user_login, name='login'),
-	url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^profile/$', views.profile, name='profile'),
+    url(r'^user_register/$', views.user_register, name='user_register'),
+
     url(
-        r'^testing/$',views.listview,
+        r'^events/$',views.listview,
         name="events_event_list"
     ),
     url(
@@ -24,4 +26,3 @@ urlpatterns = patterns('',
         name="events_event_user_registration"
     ),
 )
-
