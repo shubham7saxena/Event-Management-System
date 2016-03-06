@@ -11,7 +11,8 @@
 			<p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p>
 			{% if event.participants %}
 
-				
+				<p>{{event.participants}}</p>
+
 				<p> First Time Preference:{{event.first_time_preference}}</p>
 				<p> Actual Timing:{{event.Actual_time}}</p>
 
