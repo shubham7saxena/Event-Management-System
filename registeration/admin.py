@@ -7,7 +7,7 @@ class EventAdmin(admin.ModelAdmin):
 	list_filter = ('name','event_coordi',)
 
 class ProfileAdmin(admin.ModelAdmin):
-	list_display = ('UserName','Email','phone')
+	list_display = ('Name','Email','phone')
 	list_filter = ('user',)
 
 admin.site.register(Profile, ProfileAdmin)

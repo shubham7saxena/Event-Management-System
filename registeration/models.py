@@ -10,11 +10,17 @@ class Profile(models.Model):
 	phone = models.TextField(max_length=10, unique=True, blank=False, null=True)
 	picture = models.ImageField(upload_to='profile_images', blank=True)
 
+	first_name = models.TextField(max_length=20, blank=False, null=True)
+	last_name = models.TextField(max_length=20, blank=True, null=True)
+
 	def UserName(self):
 		return self.user.username
 
 	def Email(self):
 		return self.user.email
+
+	def Name(self):
+		return self.first_name
 
 	def __unicode__(self):
 		return self.user.username
