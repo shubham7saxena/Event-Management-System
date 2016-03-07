@@ -16,6 +16,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView
 from django.contrib import messages
 import Bpm
+import send_notif
 from .models import Profile, Event
 
 def encode_url(str):
@@ -199,6 +200,8 @@ def user_register(request):
     x = Event.objects.get(pk = pk)
     x.participants.add(xx.profile)
     x.save()
+    print xx.email
+    send_notif.sendmail(xx.email,xx.profile,x.name,x.event_coordi,x.contact_id_coordinator,x.Venue)
     return HttpResponse(1)
     pass
 

@@ -23,7 +23,7 @@ class Profile(models.Model):
 		return self.first_name
 
 	def __unicode__(self):
-		return self.user.username
+		return self.user.name
 
 class Event(models.Model):
 	name = models.CharField(max_length=50)
@@ -32,9 +32,9 @@ class Event(models.Model):
 	Venue_choices = (('1','Pronite Area'),('2','Basky-Court'),('3','Academic Block 1'),('4','Academic Block 2'),('5','Mall Stage'))
 
 
-	first_time_preference = models.CharField(max_length=2, choices=Time_CHOICES,default='1')
-	second_time_preference = models.CharField(max_length=2, choices=Time_CHOICES,default='2')
-	third_time_preference = models.CharField(max_length=2, choices=Time_CHOICES,default='3')
+	first_time_preference = models.CharField(max_length=2, choices=Time_CHOICES,default='01')
+	second_time_preference = models.CharField(max_length=2, choices=Time_CHOICES,default='02')
+	third_time_preference = models.CharField(max_length=2, choices=Time_CHOICES,default='03')
 
 	Actual_time = ''
 

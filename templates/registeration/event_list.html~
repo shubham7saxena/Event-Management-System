@@ -1,0 +1,58 @@
+	{% extends "registeration/base.html" %}
+
+	{% block body_block %}
+
+	<h2>List of Events:</h2>
+
+	<style type="text/css">
+	.hero-unit {
+	  padding-top: -0px; !important 
+	  padding: 60px; /* default is 60px; */
+	}</style>
+	<div class="hero-unit">
+		<table class="table table-bordered">
+		<thead>
+	      <tr>		
+		<th>Venue/Time</th>
+		<th>9:00 a.m.</th>
+		<th>10:00 a.m.</th>
+		<th>11:00 a.m.</th>
+		<th>12:00 p.m.</th>
+		<th>01:00 p.m.</th>
+		<th>02:00 p.m.</th>
+		<th>03:00 p.m.</th>
+		<th>04:00 p.m.</th>
+		<th>05:00 p.m.</th>
+		<th>06:00 p.m.</th>
+		<th>07:00 p.m.</th>
+		<th>08:00 p.m</th>
+	      </tr>
+
+	    </thead>
+		
+			<!-- <div> -->
+
+				<tr>
+				<th>Pronite-Area</th>
+				
+				<td>
+					{% for event in events%}
+						{%if event.Actual_time == '01'%}
+					<a href="{% url "events_event_detail" event.pk %}">
+					{{ event.name }}</a></td>
+				
+	<!-- 
+					{% for field in event.participants.all %}
+					<p> {{ field.user.username }}</p>
+					{% endfor %} -->
+
+				{% endif %}
+
+				</tr>
+			<!-- </div> -->
+			<br>
+		{% endfor %}
+		</table>
+	</div>
+
+	{% endblock %}

@@ -17,12 +17,6 @@ LOGIN_URL = '/registeration/login/'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ug201310001@iitj.ac.in'
-EMAIL_HOST_PASSWORD = 'Aakash_1408'
-EMAIL_PORT = 587
-
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

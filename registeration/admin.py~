@@ -1,0 +1,21 @@
+from django.contrib import admin	
+from registeration.models import *
+#from events.models import *
+
+class EventAdmin(admin.ModelAdmin):
+	list_display = ('name','event_coordi','contact_id_coordinator','participants_list',)
+	list_filter = ('name','event_coordi',)
+	
+	def combined_fields(self, obj):
+        	return obj.combined_fields()
+
+	def save(self, *args, **kwargs):
+   		self.field3 = self.combined_fields()
+    		super(MyModel, self).save(*args, **kwargs)
+
+class ProfileAdmin(admin.ModelAdmin):
+	list_display = ('Name','Email','phone')
+	list_filter = ('user',)
+
+admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Event,EventAdmin)
