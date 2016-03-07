@@ -23,6 +23,22 @@ $(document).ready(function(){
                 });
 
     });
+
+    $("#btn2").click(function(){
+        var x = $('#hidden').text();
+        console.log(x);
+
+        data_passed = {
+                    pk: x
+                };
+                $.get('/registeration/user_deregister/', data_passed, function () {
+                    var new_url = window.location.href;
+                    new_url = new_url.slice(0, -8);
+                    // window.location = new_url;
+                    alert("Successfully Deregistered.");
+                });
+
+    });
 });
 </script>
 
@@ -33,7 +49,7 @@ $(document).ready(function(){
 		<p> Actual Timing:{{event.Actual_time}}</p>
 	<br>
 	<p hidden id="hidden"> {{event.pk}} </p>
-	<button id="btn1">Register</button>
+	<button id="btn1">Register</button> <button id="btn2">Deregister</button>
 
 </div>
 {% endblock %}

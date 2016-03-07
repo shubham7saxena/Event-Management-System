@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^user_register/$', views.user_register, name='user_register'),
+    url(r'^user_deregister/$', views.user_deregister, name='user_deregister'),
 
     url(
         r'^events/$',views.listview,
