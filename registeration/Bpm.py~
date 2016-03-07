@@ -23,11 +23,11 @@ def execute(event_list,Venue):
 
 
 def bpm(event_list):
-	execute(event_list,'1')
-	execute(event_list,'2')
-	execute(event_list,'3')
-	execute(event_list,'4')
-	execute(event_list,'5')
+	execute(event_list,1)
+	execute(event_list,2)
+	execute(event_list,3)
+	execute(event_list,4)
+	execute(event_list,5)
 	
 
 
