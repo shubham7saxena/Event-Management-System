@@ -159,6 +159,37 @@ class EventDetailView(DetailView):
     context_object_name = 'event'
 
 
+
+class EventUserRegisterView(RedirectView):
+
+    default_return_view = 'events_event_list'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        event = Event.objects.get(pk=kwargs['event_id'])
+
+        # Check if user is not already registered
+        registrations = EventUserRegistration.objects.filter(
+            user=request.user,
+            event=event).count()
+
+        if registrations:
+            message = _('You are already registered to the %s') % event
+            messages.add_message(request, messages.ERROR, message)
+            return super(EventUserRegisterView, self).dispatch(request,
+                                                               *args,
+                                                               **kwargs)
+
+
+        registration = EventUserRegistration(user=request.user, event=event)
+        registration.save()
+
+        message = _('Successfully registered to the %s') % event
+        messages.add_message(request, messages.INFO, message)
+
+        return super(EventUserRegisterView, self).dispatch(request,
+                                                           *args, **kwargs)
+
 def user_register(request):
     xx = User.objects.get(username = request.user)
     
