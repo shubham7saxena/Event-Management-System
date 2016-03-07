@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from registeration import views
-from .views import (EventDetailView,EventUserRegisterView)
+from .views import (EventDetailView)
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
@@ -19,10 +19,5 @@ urlpatterns = patterns('',
         r'^(?P<pk>\d+)/$',
         EventDetailView.as_view(),
         name="events_event_detail"
-    ),
-    url(
-        (r'^register/(?P<event_id>\d+)/user/$'),
-        EventUserRegisterView.as_view(),
-        name="events_event_user_registration"
     ),
 )

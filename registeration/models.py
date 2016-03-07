@@ -6,12 +6,19 @@ class Profile(models.Model):
 	# A required line - links a UserProfile to User.
 	user = models.OneToOneField(User)
 	
+	#Email = user.email
 	# The additional attributes we are including.
-	website = models.URLField(blank=True)
+	phone = models.TextField(max_length=10, unique=True, blank=False, null=True)
 	picture = models.ImageField(upload_to='profile_images', blank=True)
 	
 	def __unicode__(self):
 		return self.user.username
+
+	def UserName(self):
+		return self.user.username
+
+	def Email(self):
+		return self.user.email
 
 class Event(models.Model):
 	name = models.CharField(max_length=50)
@@ -27,11 +34,10 @@ class Event(models.Model):
 	event_coordi = models.CharField(max_length=50)
 	contact_id_coordinator = models.EmailField()
 	event_description = models.TextField()
-	participants = models.ManyToManyField(Profile)
+	participant = models.ManyToManyField(Profile)
 
-	def register_user(self,user):
-		registration = EventUserRegistration(event=self, user=user)
-		registration.save()
+	def participants_list(self):
+		return ", ".join([p.user.username for p in self.participant.all()])
 
 	def publish(self):
 		self.save()
@@ -39,14 +45,3 @@ class Event(models.Model):
 	def __unicode__(self):
 		return self.name
 
-
-class EventUserRegistration(models.Model):
-    """
-    Represents a user's registration to the event.
-    """
-    event = models.ForeignKey(Event)
-    user = models.ForeignKey(Profile)
-
-    def __unicode__(self):
-        return (self.user.__unicode__() + unicode(_(" registered for ")) +
-               self.event.__unicode__())

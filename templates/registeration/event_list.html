@@ -25,18 +25,8 @@
 			<tr>
 			<td><a href="{% url "events_event_detail" event.pk %}">{{ event.name }}</a></td>
 			<td><p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p></td>
-			{% if event.participants %}
-
-				<!-- <p>participants: {{event.participants}}</p> -->
-
-				<td> First Time Preference:{{event.first_time_preference}}</td>
-				<td> Actual Timing:{{event.Actual_time}}</td>
-<!-- 
-				{% for field in event.participants.all %}
-				<p> {{ field.user.username }}</p>
-				{% endfor %} -->
-
-			{% endif %}
+			<td> First Time Preference:{{event.first_time_preference}}</td>
+			<td> Actual Timing:{{event.Actual_time}}</td>
 
 			</tr>
 		<!-- </div> -->
