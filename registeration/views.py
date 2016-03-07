@@ -192,12 +192,15 @@ class EventUserRegisterView(RedirectView):
                                                            *args, **kwargs)
 @login_required
 def user_register(request):
+    
     xx = User.objects.get(username = request.user)
     
     print xx.profile
     pk = request.GET.get('pk', '') 
     print pk
     x = Event.objects.get(pk = pk)
+  #  if x.objects.filter(username=str(xx.profile)).exists():
+	
     x.participants.add(xx.profile)
     x.save()
     print xx.email
@@ -212,7 +215,7 @@ def user_deregister(request):
     pk = request.GET.get('pk', '') 
     print pk
     x = Event.objects.get(pk = pk)
-    x.participants.filter(id__contains = str(xx.profile)).delete()
+    x.participants.remove(xx.profile)
     x.save()
     return HttpResponse(1)
     pass

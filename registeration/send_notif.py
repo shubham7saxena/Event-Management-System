@@ -2,15 +2,15 @@ from django.core.mail import EmailMessage
 
 def sendmail(email,name,event_name,coordi,contact,venue):
 	realvenue=""
-	if(venue==1):
+	if(venue=='1'):
 		realvenue = "Pronite-Area"
-	if(venue==2):
+	if(venue=='2'):
 		realvenue = "Basky Court"
-	if(venue==3):
+	if(venue=='3'):
 		realvenue = "Academic Block-1"
-	if(venue==4):
+	if(venue=='4'):
 		realvenue = "Academic Block-2"
-	if(venue==5):
+	if(venue=='5'):
 		realvenue = "Mall Stage"
 	
 		

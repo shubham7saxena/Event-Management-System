@@ -201,7 +201,7 @@ def user_register(request):
     x.participants.add(xx.profile)
     x.save()
     print xx.email
-    send_notif.sendmail(xx.email,xx.profile,x.name)
+    send_notif.sendmail(xx.email,xx.profile,x.name,x.event_coordi,x.contact_id_coordinator,x.Venue)
     return HttpResponse(1)
     pass
 
@@ -212,7 +212,7 @@ def user_deregister(request):
     pk = request.GET.get('pk', '') 
     print pk
     x = Event.objects.get(pk = pk)
-    x.participants.filter(id__contains = str(xx.profile)).delete()
+    x.participants.remove(xx.profile)
     x.save()
     return HttpResponse(1)
     pass

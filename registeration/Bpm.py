@@ -8,9 +8,16 @@ from hopcroftkarp import HopcroftKarp
 
 def execute(event_list,Venue):
 	graph_dict={}
+	
+
 	for event in event_list:
+		print "g"+str(event.first_day_preference)
+		print "d"+str(event.first_time_preference)
+		first = str(event.first_day_preference)+str(event.first_time_preference)
+		second = str(event.second_day_preference)+str(event.second_time_preference)
+		third = str(event.third_day_preference)+str(event.third_time_preference)
 		if event.Venue == Venue:
-			graph_dict[event.name]={event.first_time_preference,event.second_time_preference,event.third_time_preference}
+			graph_dict[event.name]={first,second,third}
 	
 	print graph_dict
 	timing= HopcroftKarp(graph_dict).maximum_matching()
