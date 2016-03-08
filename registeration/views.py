@@ -134,26 +134,10 @@ def profile(request):
     context_dict['userprofile'] = up
     return render_to_response('registeration/profile.html', context_dict, context)
 
-@login_required
-def events(request):
-    context = RequestContext(request)
-    context_dict = {}
-    event_list = Event.objects.all()
-    context_dict['events'] = event_list
-	
-    return render_to_response('registeration/events.html',context_dict,context)
 
 
 @login_required
 def listview(request):
-    context = RequestContext(request)
-    context_dict = {}
-    event_list = Event.objects.all()
-    context_dict['events'] = event_list
-    Bpm.bpm(event_list)
-    return render_to_response('registeration/event_list.html',context_dict,context)
-
-def post_detail(request):
     context = RequestContext(request)
     context_dict = {}
     event_list = Event.objects.all()
@@ -180,37 +164,6 @@ def EventDetailView(request,pk):
         context['value'] = "Register"
 
     return render_to_response('registeration/event_detail.html',context_dict,context)
-    
-
-class EventUserRegisterView(RedirectView):
-
-    default_return_view = 'events_event_list'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        event = Event.objects.get(pk=kwargs['event_id'])
-
-        # Check if user is not already registered
-        registrations = EventUserRegistration.objects.filter(
-            user=request.user,
-            event=event).count()
-
-        if registrations:
-            message = _('You are already registered to the %s') % event
-            messages.add_message(request, messages.ERROR, message)
-            return super(EventUserRegisterView, self).dispatch(request,
-                                                               *args,
-                                                               **kwargs)
-
-
-        registration = EventUserRegistration(user=request.user, event=event)
-        registration.save()
-
-        message = _('Successfully registered to the %s') % event
-        messages.add_message(request, messages.INFO, message)
-
-        return super(EventUserRegisterView, self).dispatch(request,
-                                                           *args, **kwargs)
 
 
 @login_required

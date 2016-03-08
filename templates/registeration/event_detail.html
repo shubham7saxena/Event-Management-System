@@ -2,9 +2,6 @@
 
 {% block body_block %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
 <script>
 $(document).ready(function(){
     $("#btn1").click(function () {
@@ -50,7 +47,7 @@ $(document).ready(function(){
 	<i>{{ event.event_description }}</i>
 		<p> First Time Preference:{{event.get_first_day_preference_display }},{{event.get_first_time_preference_display }}</p>
 		<p> Actual Timing:{{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</p>
-        
+
 	<br>
 	<p hidden id="hidden"> {{event.pk}} </p>
     <input type="button" value="hey hey" id="btn1"/>
