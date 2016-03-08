@@ -155,13 +155,15 @@ def EventDetailView(request,pk):
 
     xx = User.objects.get(username = request.user)
 
+    userRegistered = 0
 
     if Event.objects.filter(participants=xx.profile,pk=pk).exists():
-        context['id'] = "btn2"
-        context['value'] = "Deregister"
+        userRegistered = 1
     else:
-        context['id'] = "btn1"
-        context['value'] = "Register"
+        pass
+
+    print userRegistered
+    context_dict['userRegistered'] = userRegistered
 
     return render_to_response('registeration/event_detail.html',context_dict,context)
 

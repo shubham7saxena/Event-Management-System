@@ -1,46 +1,13 @@
 {% extends "registeration/base.html" %}
 
 {% block body_block %}
-
-<script>
-$(document).ready(function(){
-    $("#btn1").click(function () {
-        console.log("Aman");
-        var x = $('#hidden').text();
-        console.log(x);
-
-        data_passed = {pk: x};
-        $.get('/registeration/user_register/', data_passed, function () {
-                    alert("Successfully Registered.");
-                });
-
-        $("#btn1").val("ho ho ho");
-        $("#btn1").attr("id", "btn2");
+{% load staticfiles %}
+{% load static %}
+<script src="{% static "js/myjs.js" %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 
-        $("#btn2").unbind("click").click(function () {
-            var x = $('#hidden').text();
-            console.log(x);
 
-            data_passed = {
-                    pk: x
-                };
-                $.get('/registeration/user_deregister/', data_passed, function () {
-                    alert("Successfully Deregistered.");
-                });
-
-            $("#btn2").val("hey hey");
-            $("#btn2").attr("id", "btn1");    
-
-    });
-
-    
-});
-
-});
-
-
-</script>
 
 <h2>{{ event.name }}</h2>
 <div class="hero-unit">
@@ -50,7 +17,9 @@ $(document).ready(function(){
 
 	<br>
 	<p hidden id="hidden"> {{event.pk}} </p>
-    <input type="button" value="hey hey" id="btn1"/>
+    <p hidden id="hidden2"> {{userRegistered}} </p>
+
+    <input hidden type="button" value="" id="btn1"/>
 
 </div>
 {% endblock %}
