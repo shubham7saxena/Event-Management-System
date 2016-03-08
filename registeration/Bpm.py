@@ -5,59 +5,67 @@ from collections import OrderedDict
 
 
 def Max_bpm(graph):
+		matching = {}
+		for u in graph:
+			for v in graph[u]:
+				if v not in matching:
+					matching[v] = u
+					break
+		
+		while 1:
+			# structure residual graph into layers
+			# pred[u] gives the neighbor in the previous layer for u in U
+			# preds[v] gives a list of neighbors in the previous layer for v in V
+			# unmatched gives a list of unmatched vertices in final layer of V,
+			# and is also used as a flag value for pred[u] when u is in the first layer
+			preds = {}
+			unmatched = []
+			pred = dict([(u,unmatched) for u in graph])
+			for v in matching:
+				del pred[matching[v]]
+			layer = list(pred)
+			
+			# repeatedly extend layering structure by another pair of layers
+			while layer and not unmatched:
+				newLayer = {}
+				for u in layer:
+					for v in graph[u]:
+						if v not in preds:
+							newLayer.setdefault(v,[]).append(u)
+				layer = []
+				for v in newLayer:
+					preds[v] = newLayer[v]
+					if v in matching:
+						layer.append(matching[v])
+						pred[matching[v]] = v
+					else:
+						unmatched.append(v)
+			
+			# did we finish layering without finding any alternating paths?
+			if not unmatched:
+				unlayered = {}
+				for u in graph:
+					for v in graph[u]:
+						if v not in preds:
+							unlayered[v] = None
+				return (matching,list(pred),list(unlayered))
 
-	connected = {}
-	for u in graph:
-		for v in graph[u]:
-			if v not in connected:
-				connected[v] = u
-				break
-	
-	while 1:
-		preds = {}
-		unconnected = []
-		pred = dict([(u,unconnected) for u in graph])
-		for v in connected:
-			del pred[connected[v]]
-		layer = list(pred)
+			# recursively search backward through layers to find alternating paths
+			# recursion returns true if found path, false otherwise
+			def recurse(v):
+				if v in preds:
+					L = preds[v]
+					del preds[v]
+					for u in L:
+						if u in pred:
+							pu = pred[u]
+							del pred[u]
+							if pu is unmatched or recurse(pu):
+								matching[v] = u
+								return 1
+				return 0
 
-		while layer and not unconnected:
-			newLayer = {}
-			for u in layer:
-				for v in graph[u]:
-					if v not in preds:
-						newLayer.setdefault(v,[]).append(u)
-			layer = []
-			for v in newLayer:
-				preds[v] = newLayer[v]
-				if v in connected:
-					layer.append(connected[v])
-					pred[connected[v]] = v
-				else:
-					unconnected.append(v)
-
-		if not unconnected:
-			unlayered = {}
-			for u in graph:
-				for v in graph[u]:
-					if v not in preds:
-						unlayered[v] = None
-			return (connected,list(pred),list(unlayered))
-
-		def recurse(v):
-			if v in preds:
-				L = preds[v]
-				del preds[v]
-				for u in L:
-					if u in pred:
-						pu = pred[u]
-						del pred[u]
-						if pu is unconnected or recurse(pu):
-							connected[v] = u
-							return 1
-			return 0
-
-		for v in unconnected: recurse(v)
+			for v in unmatched: recurse(v)
 
 
 
@@ -78,22 +86,45 @@ def execute(event_list,Venue):
 		
 			
 	print graph_dict
-	timing,left_events,y= Max_bpm(graph_dict)
+	timing,y,x= Max_bpm(graph_dict)
 	print timing
-	print left_events
 
-	print "=========================================================================="
+
+	left_events=[]
+	dict_events={}
+
 
 	for time in timing:
-		for event in event_list:
-			if timing[time] == event.name:
-				event.Actual_day=time[0]
-				event.Actual_time=time[1]
+		dict_events[timing[time]]=time
+
+	print "=========================================================================="
+	print dict_events
+	print "=========================================================================="
+
+	for event in event_list:
+		if event.name in dict_events:
+			 event.Actual_day=dict_events[event.name][0]
+ 			 event.Actual_time=dict_events[event.name][0]
+ 		else:
+ 			left_events.append(event.name)
+
+
+	print left_events
+
+	# print "=========================================================================="
+
+	# for time in timing:
+	# 	for event in event_list:
+	# 		if timing[time] == event.name:
+	# 			event.Actual_day=time[0]
+	# 			event.Actual_time=time[1]
 
 	return left_events
 
 
 def bpm(event_list):
+
+	# execute(event_list,'1')
 
 	left_events={}
 

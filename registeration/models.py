@@ -42,11 +42,11 @@ class Event(models.Model):
 	third_day_preference = models.CharField(max_length=1, choices=Day_CHOICES,default='2')
 	third_time_preference = models.CharField(max_length=1, choices=Time_CHOICES,default='2')
 
-	Actual_time=models.CharField(max_length=1,default='0',choices=Time_CHOICES,null=True)
-	Actual_day=models.CharField(max_length=1,default='0',choices=Day_CHOICES,null=True)
+	Actual_time=models.CharField(max_length=1,default='$',choices=Time_CHOICES,null=True)
+	Actual_day=models.CharField(max_length=1,default='$',choices=Day_CHOICES,null=True)
 
-	past_Actual_time=models.CharField(max_length=1,default='0',choices=Time_CHOICES,null=True)
-	past_Actual_day=models.CharField(max_length=1,default='0',choices=Day_CHOICES,null=True)
+	past_Actual_time=models.CharField(max_length=1,default='$',choices=Time_CHOICES,null=True)
+	past_Actual_day=models.CharField(max_length=1,default='$',choices=Day_CHOICES,null=True)
 
 	Venue = models.CharField(max_length=1,choices=Venue_choices,default='1')
 	
