@@ -171,6 +171,7 @@ def EventDetailView(request,pk):
 
     xx = User.objects.get(username = request.user)
 
+
     if Event.objects.filter(participants=xx.profile,pk=pk).exists():
         context['id'] = "btn2"
         context['value'] = "Deregister"
@@ -219,7 +220,13 @@ def run_bpm(request):
     return HttpResponse(1)
     pass
 
+'''
+par=event.participants.all()
 
+for p in par
+    x=User.objects.get(username = p)
+    x.email
+'''
 
 @login_required
 def user_register(request):
