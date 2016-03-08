@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 
+
 class Profile(models.Model):
 	# A required line - links a UserProfile to User.
 	user = models.OneToOneField(User)
@@ -25,6 +26,7 @@ class Profile(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
+
 class Event(models.Model):
 	name = models.CharField(max_length=50)
 	Time_CHOICES = (('0', '9:00 a.m.'),('1', '10:00 a.m.'),('2', '11:00 a.m.'),('3', '12:00 a.m.'),('4', '1:00 p.m.'),('5', '2:00 p.m.'),('6', '3:00 p.m.'),('7', '4:00 a.m.'),('8', '5:00 p.m.'),('9', '6:00 p.m.'))
@@ -40,7 +42,8 @@ class Event(models.Model):
 	third_day_preference = models.CharField(max_length=1, choices=Day_CHOICES,default='2')
 	third_time_preference = models.CharField(max_length=1, choices=Time_CHOICES,default='2')
 
-	Actual_time = ''
+	Actual_time=models.CharField(max_length=1,default='0',choices=Time_CHOICES,null=True)
+	Actual_day=models.CharField(max_length=1,default='0',choices=Day_CHOICES,null=True)
 
 	Venue = models.CharField(max_length=1,choices=Venue_choices,default='1')
 	
@@ -48,6 +51,13 @@ class Event(models.Model):
 	contact_id_coordinator = models.EmailField()
 	event_description = models.TextField()
 	participants = models.ManyToManyField(Profile)
+	
+
+	def save(self, *args, **kwargs):
+		super(Event, self).save(*args, **kwargs)
+		#event_list=Event.objects.all()
+		#applybpm(event_list)
+
 
 	def participants_list(self):
 		return ", ".join([p.user.username for p in self.participants.all()])

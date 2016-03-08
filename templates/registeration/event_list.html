@@ -29,8 +29,8 @@
 
 				<!-- <p>participants: {{event.participants}}</p> -->
 
-				<td> First Time Preference:{{event.first_time_preference}}</td>
-				<td> Actual Timing:{{event.Actual_time}}</td>
+				<td> First Preference:{{event.get_first_day_preference_display }},{{event.get_first_time_preference_display }}</td>
+				<td> Actual Timing:{{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</td>
 <!-- 
 				{% for field in event.participants.all %}
 				<p> {{ field.user.username }}</p>

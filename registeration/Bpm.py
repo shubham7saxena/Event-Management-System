@@ -1,4 +1,5 @@
 from hopcroftkarp import HopcroftKarp
+from .models import Profile, Event
 
 #graph = {'a': {1}, 'b': {1, 2}, 'c': {1, 2}, 'd': {2, 3, 4}, 'e': {3, 4}, 'f': {4, 5, 6},'g': {5, 6, 7}, 'h': {8}}
 
@@ -26,6 +27,8 @@ def execute(event_list,Venue):
 	for event in event_list:
 		if (event.name).encode('ascii', 'ignore') in timing:
 			event.Actual_time=timing[(event.name).encode('ascii', 'ignore')]
+			event.Actual_day=event.Actual_time[0]
+			event.Actual_time=event.Actual_time[1]
 		
 	print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
 
@@ -36,6 +39,15 @@ def bpm(event_list):
 	execute(event_list,'3')
 	execute(event_list,'4')
 	execute(event_list,'5')
+
+	for event in event_list:
+		x = Event.objects.get(name = event.name)
+		x.Actual_time=event.Actual_time
+		x.Actual_day=event.Actual_day
+		x.save()
+		x = Event.objects.get(name = event.name)	
+		print x.Actual_time
+	
 	
 	
 	
