@@ -5,38 +5,36 @@
 
 
 
+{% block body_block %}
+<style type="text/css">
+.hero-unit {
+  padding-top: 0px; !important 
+  margin-top: -21%;
+  margin-bottom: 0%;
+
+  /*padding: 60px;  default is 60px; */
+
+}</style>
+
+
 <script>
 $(document).ready(function(){
+     console.log("Aman");
     $("#schedule").click(function(){
-        console.log("Aman");
-        var x = $('#hidden').text();
-        console.log(x);
-
-        data_passed = {
-                    pk: x
-                };
-                $.get('/registeration/run_bpm/', data_passed, function () {
-                    alert("Successfully Registered.");
-                });
-
+        location.reload();
     });
 });
 </script>
 
-{% block body_block %}
-
 <div class="hero-unit">
-    <h1>Event Management Systemsssssssssssssssss</h1>
+    <h1>Event Management System</h1>
     <br>
-    <button id = "schedule">Schedule Events</button>
+    <input type="button" value="Schedule Events" id = "schedule"/>
 
 </div>
 
-<div class="row-fluid">
-    <!--/span-->
-</div><!--/row-->
-
-<div class="hero-unit">
+<p style="margin-left: 65px;"><strong> Events that have been scheduled:-</strong></p>
+<div class="hero-unit" style = "margin-top: -21%;">
     <table class="table table-bordered">
     <thead>
       <tr>
@@ -65,6 +63,9 @@ $(document).ready(function(){
     {% endfor %}
     </table>
 
+
+    {% if count %}
+
     <p>Events that can't be scheduled because all the preferrd timing slots are clashing with some other event .</p>
 
     <table class="table table-bordered">
@@ -92,6 +93,9 @@ $(document).ready(function(){
         <br>
     {% endfor %}
     </table>
+    {% else %}
+    {% endif %}
+
 </div>
 
 

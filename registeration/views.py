@@ -27,7 +27,6 @@ def encode_url(str):
 def decode_url(str):
     return str.replace('_', ' ')
 
-
 def index(request):
     context = RequestContext(request)
 
@@ -190,6 +189,13 @@ def run_bpm(request):
     event_list = Event.objects.all()
     print "xx ----------  \n"
     print event_list
+    
+    count=0
+    for event in event_list:
+        if event.Actual_time=='$':
+            count+=1
+
+
     print "xx ----------  \n"
     y = Bpm.bpm(event_list)
     print "---------------------------------------------------------------------\n "
@@ -197,6 +203,7 @@ def run_bpm(request):
     print "---------------------------------------------------------------------\n "
     context_dict = {}
     context_dict['events'] = event_list
+    context_dict['count'] = count
 
     return render_to_response('registeration/indexAdmin.html',context_dict)
 
@@ -208,7 +215,6 @@ for p in par
     x=User.objects.get(username = p)
     x.email
 '''
-
 @login_required
 def user_register(request):
     

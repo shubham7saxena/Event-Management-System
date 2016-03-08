@@ -3,15 +3,12 @@
 {% block body_block %}
 <div class="hero-unit">
    	   <h1> Profile <h1> <br/>
-	   <h2>{{ user.username }}</h2>
+	   <h2>{{ userprofile.first_name }} {{ userprofile.last_name }}</h2>
        <p>Email: {{ user.email }}</p>
        
-       {% if userprofile %}
-	   <p>Website: <a href="{{ userprofile.website }}">{{userprofile.website}}</a></p>
-       <br/>
+	   <p>Phone Number: {{userprofile.phone}}</p>
        {% if userprofile.picture %}
 	   <img src="{{ userprofile.picture.url }}" height = "250" width = "250" class = "img-rounded" border-radius : "50%"/>
-	   {% endif %}
 	   {% endif %}
 </div>
 {% endblock %}
