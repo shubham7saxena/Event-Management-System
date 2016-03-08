@@ -25,13 +25,14 @@ $(document).ready(function(){
 <div class="hero-unit">
     <h1>Event Management System</h1>
     {% if request.user.is_staff %}
-    <button onclick="myFunction()">chal ja</button>
+    <button onclick="myFunction()">Schedule Events</button>
 	{% endif %}
 
 </div>
 
 <div class="row-fluid">
-    <!--/span-->
-</div><!--/row-->
- {% endblock %}
+    
+</div>
+
+{% endblock %}
 

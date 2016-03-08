@@ -41,7 +41,14 @@ def index(request):
         request.session['last_visit'] = str(datetime.now())
         request.session['visits'] = 1
 
-    return render_to_response('registeration/index.html', context)
+    if request.user.is_authenticated():
+        xx = request.user.is_staff
+        if xx is True:
+            print "hbjeccnfnjncdnncjdhj AMit Jain \n \n \n"
+            run_bpm(request)
+        pass
+
+    return render_to_response('registeration/indexAdmin.html', context)
 
 def register(request):
     context = RequestContext(request)
@@ -162,7 +169,7 @@ def EventDetailView(request,pk):
     else:
         pass
 
-    print userRegistered
+    print userRegistered    
     context_dict['userRegistered'] = userRegistered
 
     return render_to_response('registeration/event_detail.html',context_dict,context)
@@ -171,9 +178,12 @@ def EventDetailView(request,pk):
 @login_required
 def run_bpm(request):
     event_list = Event.objects.all()
-    Bpm.bpm(event_list)
+    y = Bpm.bpm(event_list)
+    print "---------------------------------------------------------------------\n "
+    print y
+    print "---------------------------------------------------------------------\n "
     return HttpResponse(1)
-    pass
+
 
 '''
 par=event.participants.all()

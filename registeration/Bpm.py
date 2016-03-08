@@ -75,10 +75,14 @@ def execute(event_list,Venue):
 			
 			graph_dict[event.name]=[first,second,third]
 		
-		print graph_dict
+		
 			
-
+	print graph_dict
 	timing,left_events,y= Max_bpm(graph_dict)
+	print timing
+	print left_events
+
+	print "=========================================================================="
 
 	for time in timing:
 		for event in event_list:
@@ -111,7 +115,6 @@ def bpm(event_list):
 
 		x.save()
 		x = Event.objects.get(name = event.name)	
-		print x.Actual_time
 
 
 	return left_events
