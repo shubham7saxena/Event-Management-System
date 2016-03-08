@@ -54,9 +54,18 @@ class Event(models.Model):
 	
 
 	def save(self, *args, **kwargs):
+		temp = self
 		super(Event, self).save(*args, **kwargs)
-		#event_list=Event.objects.all()
-		#applybpm(event_list)
+		if temp.Actual_time != self.Actual_time:
+			u = self.participants.all()
+			print u
+			receivers = []
+			for user in u:
+				xx = User.objects.get(username = user).email
+				receivers.append(xx)
+			#print xx
+			send_notif.sendmail_to_registered(receivers,self.name,self.event_coordi,self.contact_id_coordinator,self.Venue)
+
 
 
 	def participants_list(self):
