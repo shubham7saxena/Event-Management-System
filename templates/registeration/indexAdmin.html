@@ -3,9 +3,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+
+
 <script>
 $(document).ready(function(){
-    $("#btn1").click(function(){
+    $("#schedule").click(function(){
         console.log("Aman");
         var x = $('#hidden').text();
         console.log(x);
@@ -22,11 +24,11 @@ $(document).ready(function(){
 </script>
 
 {% block body_block %}
+
 <div class="hero-unit">
-    <h1>Event Management System</h1>
-    {% if request.user.is_staff %}
-    <button onclick="myFunction()">Schedule Events</button>
-	{% endif %}
+    <h1>Event Management Systemsssssssssssssssss</h1>
+    <br>
+    <button id = "schedule">Schedule Events</button>
 
 </div>
 
@@ -39,8 +41,9 @@ $(document).ready(function(){
     <thead>
       <tr>
         <th>Event Name</th>
-        <th>Contact </th>
         <th>1st Prefernce </th>
+        <th>2nd Prefernce </th>
+        <th>3rd Prefernce </th>
         <th>Actual Timings </th>
       </tr>
     </thead>
@@ -48,23 +51,44 @@ $(document).ready(function(){
         <!-- <div> -->
 
             <tr>
-            <td><a href="{% url "events_event_detail" event.pk %}">{{ event.name }}</a></td>
-            <td><p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p></td>
-            {% if event.participants %}
+            {% if event.get_Actual_time_display != '$'%} 
+            <td>{{ event.name }}</td>
 
-                <!-- <p>participants: {{event.participants}}</p> -->
-
-                <td> First Preference:{{event.get_first_day_preference_display }},{{event.get_first_time_preference_display }}</td>
-                <td> Actual Timing:{{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</td>
-<!-- 
-                {% for field in event.participants.all %}
-                <p> {{ field.user.username }}</p>
-                {% endfor %} -->
-
-            {% endif %}
-
+                <td> {{event.get_first_day_preference_display }}, {{event.get_first_time_preference_display }}</td>
+                <td> {{event.get_second_day_preference_display }}, {{event.get_second_time_preference_display }}</td>
+                <td> {{event.get_third_day_preference_display }}, {{event.get_third_time_preference_display }}</td>
+                <td> {{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</td>
             </tr>
-        <!-- </div> -->
+            {% else %}
+            {% endif %}
+        <br>
+    {% endfor %}
+    </table>
+
+    <p>Events that can't be scheduled because all the preferrd timing slots are clashing with some other event .</p>
+
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>1st Prefernce </th>
+        <th>2nd Prefernce </th>
+        <th>3rd Prefernce </th>
+      </tr>
+    </thead>
+    {% for event in events%}
+        <!-- <div> -->
+
+            <tr>
+            {% if event.get_Actual_time_display == '$'%} 
+            <td>{{ event.name }}</td>
+
+                <td> {{event.get_first_day_preference_display }}, {{event.get_first_time_preference_display }}</td>
+                <td> {{event.get_second_day_preference_display }}, {{event.get_second_time_preference_display }}</td>
+                <td> {{event.get_third_day_preference_display }}, {{event.get_third_time_preference_display }}</td>
+            </tr>
+            {% else %}
+            {% endif %}
         <br>
     {% endfor %}
     </table>

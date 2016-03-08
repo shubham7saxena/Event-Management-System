@@ -9,39 +9,563 @@
   padding-top: -0px; !important 
   padding: 60px; /* default is 60px; */
 }</style>
+
+
 <div class="hero-unit">
-	<table class="table table-bordered">
+	<table class="table table-bordered" id="day1">
 	<thead>
       <tr>
-        <th>Event Name</th>
-        <th>Contact </th>
-        <th>1st Prefernce </th>
-        <th>Actual Timings </th>
+	<th>Venue/Time</th>
+        <th>9:00 a.m.</th>
+        <th>10:00 a.m.</th>
+        <th>11:00 a.m.</th>
+        <th>12:00 p.m.</th>
+	<th>1:00 p.m.</th>
+	<th>2:00 p.m.</th>
+	<th>3:00 p.m.</th>
+	<th>4:00 p.m.</th>
+	<th>5:00 p.m.</th>
+	<th>6:00 p.m.</th>
+
       </tr>
     </thead>
-	{% for event in events%}
+	
 		<!-- <div> -->
 
 			<tr>
-			<td><a href="{% url "events_event_detail" event.pk %}">{{ event.name }}</a></td>
-			<td><p> Contact: {{ event.event_coordi }} ({{ event.contact_id_coordinator}}) </p></td>
-			{% if event.participants %}
-
-				<!-- <p>participants: {{event.participants}}</p> -->
-
-				<td> First Preference:{{event.get_first_day_preference_display }},{{event.get_first_time_preference_display }}</td>
-				<td> Actual Timing:{{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</td>
-<!-- 
-				{% for field in event.participants.all %}
-				<p> {{ field.user.username }}</p>
-				{% endfor %} -->
-
-			{% endif %}
-
+			<th>Pronite Area</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
 			</tr>
+			<tr>
+			<th>Basky Court</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-1</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-2</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Mall Stage</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<p hidden id ="demo">{{events|safe}}</p>
+			<script>
+			function check(day,time,venue){
+				var event;
+				//console.log(day+" "+venue+" "+time)
+				 /*var myJSONList = (("{{events}}").replace(/&(l|g|quo)t;/g, function(a,b){
+							return {
+							    l   : '<',
+							    g   : '>',
+							    quo : '"'
+							}[b];
+						    }));
+
+				js_list = JSON.parse( myJSONList );*/
+				//var json_string = unescape({{events | safe}});
+				
+				//var js_list = JSON.parse(json_string);
+				var js_list ={{events|safe}}
+				for(var i=0;i<js_list.length;++i){
+					console.log(js_list[i][8])
+					if(js_list[i][9] === day && js_list[i][8]===time && js_list[i][12]===venue)
+						return js_list[i];	
+				}
+				//return null;
+				//console.log(js_list.length)
+				return null
+ 
+			}
+			  var x = document.getElementById("day1").rows;
+			 for(var i =1;i<=5;++i){
+			  var y = x[i].cells
+			  for(var j=0;j<10;++j)	
+			    {
+			    var object = check.call(object,"0",""+j,""+i);
+			    if(object === null)
+				y[j+1].innerHTML=""
+			     else
+				{
+				 var link =document.createElement("a");
+				link.setAttribute("href","http://127.0.0.1:8000/registeration/"+object[0]+"/")
+				var linkText = document.createTextNode(object[1])
+				link.appendChild(linkText);
+				y[j+1].appendChild(link)
+				}		
+			    
+			    }
+			  }					
+			 
+			</script>	
 		<!-- </div> -->
 		<br>
-	{% endfor %}
+	
+	</table>
+		<table class="table table-bordered" id="day2">
+	<thead>
+      <tr>
+	<th>Venue/Time</th>
+        <th>9:00 a.m.</th>
+        <th>10:00 a.m.</th>
+        <th>11:00 a.m.</th>
+        <th>12:00 p.m.</th>
+	<th>1:00 p.m.</th>
+	<th>2:00 p.m.</th>
+	<th>3:00 p.m.</th>
+	<th>4:00 p.m.</th>
+	<th>5:00 p.m.</th>
+	<th>6:00 p.m.</th>
+
+      </tr>
+    </thead>
+	
+		<!-- <div> -->
+
+			<tr>
+			<th>Pronite Area</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Basky Court</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-1</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-2</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Mall Stage</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<p hidden id ="demo">{{events|safe}}</p>
+			<script>
+			function check(day,time,venue){
+				var event;
+				//console.log(day+" "+venue+" "+time)
+				 /*var myJSONList = (("{{events}}").replace(/&(l|g|quo)t;/g, function(a,b){
+							return {
+							    l   : '<',
+							    g   : '>',
+							    quo : '"'
+							}[b];
+						    }));
+
+				js_list = JSON.parse( myJSONList );*/
+				//var json_string = unescape({{events | safe}});
+				
+				//var js_list = JSON.parse(json_string);
+				var js_list ={{events|safe}}
+				for(var i=0;i<js_list.length;++i){
+					//console.log(js_list[i].Actual_time)
+					if(js_list[i][9] === day && js_list[i][8]===time && js_list[i][12]===venue)
+						return js_list[i];	
+				}
+				//return null;
+				//console.log(js_list.length)
+				return null
+ 
+			}
+			  var x = document.getElementById("day2").rows;
+			 for(var i =1;i<=5;++i){
+			  var y = x[i].cells
+			  for(var j=0;j<10;++j)	
+			    {
+			    var object = check.call(object,"1",""+j,""+i);
+			    if(object === null)
+				y[j+1].innerHTML=""
+			     else
+				{
+				 var link =document.createElement("a");
+				link.setAttribute("href","http://127.0.0.1:8000/registeration/"+object[0]+"/")
+				var linkText = document.createTextNode(object[1])
+				link.appendChild(linkText);
+				y[j+1].appendChild(link)
+				}
+						
+			    
+			    }
+			  }					
+			 
+			</script>	
+		<!-- </div> -->
+		<br>
+	
+	</table>
+		<table class="table table-bordered" id="day3">
+	<thead>
+      <tr>
+	<th>Venue/Time</th>
+        <th>9:00 a.m.</th>
+        <th>10:00 a.m.</th>
+        <th>11:00 a.m.</th>
+        <th>12:00 p.m.</th>
+	<th>1:00 p.m.</th>
+	<th>2:00 p.m.</th>
+	<th>3:00 p.m.</th>
+	<th>4:00 p.m.</th>
+	<th>5:00 p.m.</th>
+	<th>6:00 p.m.</th>
+
+      </tr>
+    </thead>
+	
+		<!-- <div> -->
+
+			<tr>
+			<th>Pronite Area</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Basky Court</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-1</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-2</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Mall Stage</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<p hidden id ="demo">{{events|safe}}</p>
+			<script>
+			function check(day,time,venue){
+				var event;
+				//console.log(day+" "+venue+" "+time)
+				 /*var myJSONList = (("{{events}}").replace(/&(l|g|quo)t;/g, function(a,b){
+							return {
+							    l   : '<',
+							    g   : '>',
+							    quo : '"'
+							}[b];
+						    }));
+
+				js_list = JSON.parse( myJSONList );*/
+				//var json_string = unescape({{events | safe}});
+				
+				//var js_list = JSON.parse(json_string);
+				var js_list ={{events|safe}}
+				for(var i=0;i<js_list.length;++i){
+					console.log(js_list[i][7])
+					if(js_list[i][9] === day && js_list[i][8]===time && js_list[i][12]===venue)
+						return js_list[i];	
+				}
+				//return null;
+				//console.log(js_list.length)
+				return null
+ 
+			}
+			  var x = document.getElementById("day3").rows;
+			 for(var i =1;i<=5;++i){
+			  var y = x[i].cells
+			  for(var j=0;j<10;++j)	
+			    {
+			    var object = check.call(object,"2",""+j,""+i);
+			    if(object === null)
+				y[j+1].innerHTML=""
+			     else
+				{
+				 var link =document.createElement("a");
+				link.setAttribute("href","http://127.0.0.1:8000/registeration/"+object[0]+"/")
+				var linkText = document.createTextNode(object[1])
+				link.appendChild(linkText);
+				y[j+1].appendChild(link)
+				}
+			    
+			    }
+			  }					
+			 
+			</script>	
+		<!-- </div> -->
+		<br>
+	
+	</table>
+		<table class="table table-bordered" id="day4">
+	<thead>
+      <tr>
+	<th>Venue/Time</th>
+        <th>9:00 a.m.</th>
+        <th>10:00 a.m.</th>
+        <th>11:00 a.m.</th>
+        <th>12:00 p.m.</th>
+	<th>1:00 p.m.</th>
+	<th>2:00 p.m.</th>
+	<th>3:00 p.m.</th>
+	<th>4:00 p.m.</th>
+	<th>5:00 p.m.</th>
+	<th>6:00 p.m.</th>
+
+      </tr>
+    </thead>
+	
+		<!-- <div> -->
+
+			<tr>
+			<th>Pronite Area</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Basky Court</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-1</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Acad Block-2</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<tr>
+			<th>Mall Stage</th>
+			<td></td>	
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+			<p hidden id ="demo">{{events|safe}}</p>
+			<script>
+			function check(day,time,venue){
+				var event;
+				//console.log(day+" "+venue+" "+time)
+				 /*var myJSONList = (("{{events}}").replace(/&(l|g|quo)t;/g, function(a,b){
+							return {
+							    l   : '<',
+							    g   : '>',
+							    quo : '"'
+							}[b];
+						    }));
+
+				js_list = JSON.parse( myJSONList );*/
+				//var json_string = unescape({{events | safe}});
+				
+				//var js_list = JSON.parse(json_string);
+				var js_list ={{events|safe}}
+				console.log(js_list)
+				for(var i=0;i<js_list.length;++i){
+					console.log(js_list[i][7])
+					if(js_list[i][9] === day && js_list[i][8]===time && js_list[i][12]===venue)
+						return js_list[i];	
+				}
+				//return null;
+				//console.log(js_list.length)
+				return null
+ 
+			}
+			  var x = document.getElementById("day4").rows;
+			 for(var i =1;i<=5;++i){
+			  var y = x[i].cells
+			  for(var j=0;j<10;++j)	
+			    {
+			    var object = check.call(object,"3",""+j,""+i);
+			    if(object === null)
+				y[j+1].innerHTML=""
+			    else
+				{
+				 var link =document.createElement("a");
+				link.setAttribute("href","http://127.0.0.1:8000/registeration/"+object[0]+"/")
+				var linkText = document.createTextNode(object[1])
+				link.appendChild(linkText);
+				y[j+1].appendChild(link)
+				}
+						
+			    
+			    }
+			  }					
+			 
+			</script>	
+		<!-- </div> -->
+		<br>
+	
 	</table>
 </div>
 

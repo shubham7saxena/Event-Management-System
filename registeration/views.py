@@ -19,7 +19,8 @@ from django.contrib import messages
 import Bpm
 import send_notif
 from .models import Profile, Event
-
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 def encode_url(str):
     return str.replace(' ', '_')
 
@@ -42,13 +43,19 @@ def index(request):
         request.session['visits'] = 1
 
     if request.user.is_authenticated():
+        print "***************************************************************************"
         xx = request.user.is_staff
+
         if xx is True:
             print "hbjeccnfnjncdnncjdhj AMit Jain \n \n \n"
-            run_bpm(request)
-        pass
+            return run_bpm(request)
 
-    return render_to_response('registeration/indexAdmin.html', context)
+        else:   
+            # print "***************************************************************************"
+            return render_to_response('registeration/index.html', context)
+    else:   
+        # print "***************************************************************************"
+        return render_to_response('registeration/index.html', context)
 
 def register(request):
     context = RequestContext(request)
@@ -148,8 +155,11 @@ def listview(request):
     context = RequestContext(request)
     context_dict = {}
     event_list = Event.objects.all()
-    context_dict['events'] = event_list
-    Bpm.bpm(event_list)
+    events = list(Event.objects.values_list())
+    events_json = json.dumps(events,cls=DjangoJSONEncoder)
+    context_dict['events'] = events_json
+
+   # Bpm.bpm(event_list)
     return render_to_response('registeration/event_list.html',context_dict,context)
 
 
@@ -178,11 +188,17 @@ def EventDetailView(request,pk):
 @login_required
 def run_bpm(request):
     event_list = Event.objects.all()
+    print "xx ----------  \n"
+    print event_list
+    print "xx ----------  \n"
     y = Bpm.bpm(event_list)
     print "---------------------------------------------------------------------\n "
     print y
     print "---------------------------------------------------------------------\n "
-    return HttpResponse(1)
+    context_dict = {}
+    context_dict['events'] = event_list
+
+    return render_to_response('registeration/indexAdmin.html',context_dict)
 
 
 '''

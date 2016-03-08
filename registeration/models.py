@@ -61,19 +61,19 @@ class Event(models.Model):
 		temp = self
 
 		super(Event, self).save(*args, **kwargs)
-		print self.past_Actual_time
-		print temp.Actual_time
-		print "amit"
+		# print self.past_Actual_time
+		# print temp.Actual_time
+		# print "amit"
 
-		if temp.Actual_time != self.past_Actual_time:
-			u = self.participants.all()
-			print u
-			receivers = []
-			for user in u:
-				xx = User.objects.get(username = user).email
-				receivers.append(xx)
-			#print xx
-			send_notif.sendmail_to_registered(receivers,self.name,self.event_coordi,self.contact_id_coordinator,self.Venue)
+		# if temp.Actual_time != self.past_Actual_time:
+		# 	u = self.participants.all()
+		# 	print u
+		# 	receivers = []
+		# 	for user in u:
+		# 		xx = User.objects.get(username = user).email
+		# 		receivers.append(xx)
+		# 	#print xx
+		# 	send_notif.sendmail_to_registered(receivers,self.name,self.event_coordi,self.contact_id_coordinator,self.Venue)
 
 
 

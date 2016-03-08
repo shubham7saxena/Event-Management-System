@@ -102,12 +102,14 @@ def execute(event_list,Venue):
 	print "=========================================================================="
 
 	for event in event_list:
-		if event.name in dict_events:
-			 event.Actual_day=dict_events[event.name][0]
- 			 event.Actual_time=dict_events[event.name][0]
- 		else:
- 			left_events.append(event.name)
-
+		if event.Venue == Venue:		
+			if event.name in dict_events:
+				 event.Actual_day=dict_events[event.name][0]
+	 			 event.Actual_time=dict_events[event.name][1]
+	 		else:
+	 			left_events.append(event.name)
+	 			event.Actual_day='$'
+	 			event.Actual_time='$'
 
 	print left_events
 
