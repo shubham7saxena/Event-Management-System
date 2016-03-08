@@ -1,8 +1,33 @@
 {% extends "registeration/base.html" %}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $("#btn1").click(function(){
+        console.log("Aman");
+        var x = $('#hidden').text();
+        console.log(x);
+
+        data_passed = {
+                    pk: x
+                };
+                $.get('/registeration/run_bpm/', data_passed, function () {
+                    alert("Successfully Registered.");
+                });
+
+    });
+});
+</script>
+
 {% block body_block %}
 <div class="hero-unit">
     <h1>Event Management System</h1>
+    {% if request.user.is_staff %}
+    <button onclick="myFunction()">chal ja</button>
+	{% endif %}
+
 </div>
 
 <div class="row-fluid">

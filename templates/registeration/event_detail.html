@@ -7,39 +7,42 @@
 
 <script>
 $(document).ready(function(){
-    $("#btn1").click(function(){
+    $("#btn1").click(function () {
         console.log("Aman");
         var x = $('#hidden').text();
         console.log(x);
 
-        data_passed = {
-                    pk: x
-                };
-                $.get('/registeration/user_register/', data_passed, function () {
-                    var new_url = window.location.href;
-                    new_url = new_url.slice(0, -8);
-                    // window.location = new_url;
+        data_passed = {pk: x};
+        $.get('/registeration/user_register/', data_passed, function () {
                     alert("Successfully Registered.");
                 });
 
-    });
+        $("#btn1").val("ho ho ho");
+        $("#btn1").attr("id", "btn2");
 
-    $("#btn2").click(function(){
-        var x = $('#hidden').text();
-        console.log(x);
 
-        data_passed = {
+        $("#btn2").unbind("click").click(function () {
+            var x = $('#hidden').text();
+            console.log(x);
+
+            data_passed = {
                     pk: x
                 };
                 $.get('/registeration/user_deregister/', data_passed, function () {
-                    var new_url = window.location.href;
-                    new_url = new_url.slice(0, -8);
-                    // window.location = new_url;
                     alert("Successfully Deregistered.");
                 });
 
+            $("#btn2").val("hey hey");
+            $("#btn2").attr("id", "btn1");    
+
     });
+
+    
 });
+
+});
+
+
 </script>
 
 <h2>{{ event.name }}</h2>
@@ -49,7 +52,7 @@ $(document).ready(function(){
 		<p> Actual Timing:{{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</p>
 	<br>
 	<p hidden id="hidden"> {{event.pk}} </p>
-	<button id="btn1">Register</button> <button id="btn2">Deregister</button>
+    <input type="button" value="hey hey" id="btn1"/>
 
 </div>
 {% endblock %}

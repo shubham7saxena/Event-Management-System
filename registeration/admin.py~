@@ -15,4 +15,4 @@ class ProfileAdmin(admin.ModelAdmin):
 	list_filter = ('user',)
 
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Event,EventAdmin)
+admin.site.register(Event,EventAdmin)a

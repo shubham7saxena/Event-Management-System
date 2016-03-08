@@ -1,4 +1,5 @@
 from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from registeration.models import *
@@ -152,14 +153,33 @@ def listview(request):
     Bpm.bpm(event_list)
     return render_to_response('registeration/event_list.html',context_dict,context)
 
+def post_detail(request):
+    context = RequestContext(request)
+    context_dict = {}
+    event_list = Event.objects.all()
+    context_dict['events'] = event_list
+    Bpm.bpm(event_list)
+    return render_to_response('registeration/event_list.html',context_dict,context)
 
 
-class EventDetailView(DetailView):
+def EventDetailView(request,pk):
+    context = RequestContext(request)
 
-    model = Event
-    context_object_name = 'event'
+    x = get_object_or_404(Event, pk=pk)
+    context_dict = {}
+    context_dict['event'] = x
 
+    xx = User.objects.get(username = request.user)
 
+    if Event.objects.filter(participants=xx.profile,pk=pk).exists():
+        context['id'] = "btn2"
+        context['value'] = "Deregister"
+    else:
+        context['id'] = "btn1"
+        context['value'] = "Register"
+
+    return render_to_response('registeration/event_detail.html',context_dict,context)
+    
 
 class EventUserRegisterView(RedirectView):
 
@@ -190,6 +210,17 @@ class EventUserRegisterView(RedirectView):
 
         return super(EventUserRegisterView, self).dispatch(request,
                                                            *args, **kwargs)
+
+
+@login_required
+def run_bpm(request):
+    event_list = Event.objects.all()
+    Bpm.bpm(event_list)
+    return HttpResponse(1)
+    pass
+
+
+
 @login_required
 def user_register(request):
     
@@ -199,7 +230,7 @@ def user_register(request):
     pk = request.GET.get('pk', '') 
     print pk
     x = Event.objects.get(pk = pk)
-  #  if x.objects.filter(username=str(xx.profile)).exists():
+    #if x.objects.filter(username=str(xx.profile)).exists():
 	
     x.participants.add(xx.profile)
     x.save()
