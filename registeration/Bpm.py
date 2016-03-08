@@ -101,8 +101,14 @@ def bpm(event_list):
 
 	for event in event_list:
 		x = Event.objects.get(name = event.name)
+
+
+		x.past_Actual_time=x.Actual_time
+		x.past_Actual_day=x.Actual_day
+		
 		x.Actual_time=event.Actual_time
 		x.Actual_day=event.Actual_day
+
 		x.save()
 		x = Event.objects.get(name = event.name)	
 		print x.Actual_time

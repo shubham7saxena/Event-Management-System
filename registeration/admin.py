@@ -5,7 +5,7 @@ from registeration.models import *
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('name','event_coordi','contact_id_coordinator','participants_list',)
 	list_filter = ('name','event_coordi','Actual_time')
-	exclude=('Actual_time','Actual_day','participants')
+	exclude=('Actual_time','Actual_day','past_Actual_time','past_Actual_day','participants')
 
 	
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
-
+import send_notif
 
 class Profile(models.Model):
 	# A required line - links a UserProfile to User.
@@ -45,6 +45,9 @@ class Event(models.Model):
 	Actual_time=models.CharField(max_length=1,default='0',choices=Time_CHOICES,null=True)
 	Actual_day=models.CharField(max_length=1,default='0',choices=Day_CHOICES,null=True)
 
+	past_Actual_time=models.CharField(max_length=1,default='0',choices=Time_CHOICES,null=True)
+	past_Actual_day=models.CharField(max_length=1,default='0',choices=Day_CHOICES,null=True)
+
 	Venue = models.CharField(max_length=1,choices=Venue_choices,default='1')
 	
 	event_coordi = models.CharField(max_length=50)
@@ -54,9 +57,15 @@ class Event(models.Model):
 	
 
 	def save(self, *args, **kwargs):
+		print "dsadfafsdsfdsfadsgagfgfb"
 		temp = self
+
 		super(Event, self).save(*args, **kwargs)
-		if temp.Actual_time != self.Actual_time:
+		print self.past_Actual_time
+		print temp.Actual_time
+		print "amit"
+
+		if temp.Actual_time != self.past_Actual_time:
 			u = self.participants.all()
 			print u
 			receivers = []
