@@ -1,4 +1,5 @@
 from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from registeration.models import *
@@ -18,13 +19,13 @@ from django.contrib import messages
 import Bpm
 import send_notif
 from .models import Profile, Event
-
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 def encode_url(str):
     return str.replace(' ', '_')
 
 def decode_url(str):
     return str.replace('_', ' ')
-
 
 def index(request):
     context = RequestContext(request)
@@ -40,7 +41,20 @@ def index(request):
         request.session['last_visit'] = str(datetime.now())
         request.session['visits'] = 1
 
-    return render_to_response('registeration/index.html', context)
+    if request.user.is_authenticated():
+        print "***************************************************************************"
+        xx = request.user.is_staff
+
+        if xx is True:
+            print "hbjeccnfnjncdnncjdhj AMit Jain \n \n \n"
+            return run_bpm(request)
+
+        else:   
+            # print "***************************************************************************"
+            return render_to_response('registeration/index.html', context)
+    else:   
+        # print "***************************************************************************"
+        return render_to_response('registeration/index.html', context)
 
 def register(request):
     context = RequestContext(request)
@@ -133,14 +147,6 @@ def profile(request):
     context_dict['userprofile'] = up
     return render_to_response('registeration/profile.html', context_dict, context)
 
-@login_required
-def events(request):
-    context = RequestContext(request)
-    context_dict = {}
-    event_list = Event.objects.all()
-    context_dict['events'] = event_list
-	
-    return render_to_response('registeration/events.html',context_dict,context)
 
 
 @login_required
@@ -148,56 +154,78 @@ def listview(request):
     context = RequestContext(request)
     context_dict = {}
     event_list = Event.objects.all()
-    context_dict['events'] = event_list
-    Bpm.bpm(event_list)
+    events = list(Event.objects.values_list())
+    events_json = json.dumps(events,cls=DjangoJSONEncoder)
+    context_dict['events'] = events_json
+
+   # Bpm.bpm(event_list)
     return render_to_response('registeration/event_list.html',context_dict,context)
 
 
+def EventDetailView(request,pk):
+    context = RequestContext(request)
 
-class EventDetailView(DetailView):
+    x = get_object_or_404(Event, pk=pk)
+    context_dict = {}
+    context_dict['event'] = x
 
-    model = Event
-    context_object_name = 'event'
+    xx = User.objects.get(username = request.user)
 
+    userRegistered = 0
 
+    if Event.objects.filter(participants=xx.profile,pk=pk).exists():
+        userRegistered = 1
+    else:
+        pass
 
-class EventUserRegisterView(RedirectView):
+    print userRegistered    
+    context_dict['userRegistered'] = userRegistered
 
-    default_return_view = 'events_event_list'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        event = Event.objects.get(pk=kwargs['event_id'])
-
-        # Check if user is not already registered
-        registrations = EventUserRegistration.objects.filter(
-            user=request.user,
-            event=event).count()
-
-        if registrations:
-            message = _('You are already registered to the %s') % event
-            messages.add_message(request, messages.ERROR, message)
-            return super(EventUserRegisterView, self).dispatch(request,
-                                                               *args,
-                                                               **kwargs)
+    return render_to_response('registeration/event_detail.html',context_dict,context)
 
 
-        registration = EventUserRegistration(user=request.user, event=event)
-        registration.save()
+@login_required
+def run_bpm(request):
+    event_list = Event.objects.all()
+    print "xx ----------  \n"
+    print event_list
+    
+    count=0
+    for event in event_list:
+        if event.Actual_time=='$':
+            count+=1
 
-        message = _('Successfully registered to the %s') % event
-        messages.add_message(request, messages.INFO, message)
 
-        return super(EventUserRegisterView, self).dispatch(request,
-                                                           *args, **kwargs)
+    print "xx ----------  \n"
+    y = Bpm.bpm(event_list)
+    print "---------------------------------------------------------------------\n "
+    print y
+    print "---------------------------------------------------------------------\n "
+    context_dict = {}
+    context_dict['events'] = event_list
+    context_dict['count'] = count
+
+    return render_to_response('registeration/indexAdmin.html',context_dict)
+
+
+'''
+par=event.participants.all()
+
+for p in par
+    x=User.objects.get(username = p)
+    x.email
+'''
 @login_required
 def user_register(request):
+    
     xx = User.objects.get(username = request.user)
     
     print xx.profile
     pk = request.GET.get('pk', '') 
     print pk
     x = Event.objects.get(pk = pk)
+    #if x.objects.filter(username=str(xx.profile)).exists():
+	
     x.participants.add(xx.profile)
     x.save()
     print xx.email

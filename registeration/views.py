@@ -149,7 +149,7 @@ def profile(request):
 
 
 
-@login_required
+
 def listview(request):
     context = RequestContext(request)
     context_dict = {}
@@ -161,7 +161,7 @@ def listview(request):
    # Bpm.bpm(event_list)
     return render_to_response('registeration/event_list.html',context_dict,context)
 
-
+@login_required
 def EventDetailView(request,pk):
     context = RequestContext(request)
 
