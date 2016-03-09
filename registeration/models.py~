@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
-
+import send_notif
 
 class Profile(models.Model):
 	# A required line - links a UserProfile to User.
@@ -42,8 +42,11 @@ class Event(models.Model):
 	third_day_preference = models.CharField(max_length=1, choices=Day_CHOICES,default='2')
 	third_time_preference = models.CharField(max_length=1, choices=Time_CHOICES,default='2')
 
-	Actual_time=models.CharField(max_length=1,default='0',choices=Time_CHOICES,null=True)
-	Actual_day=models.CharField(max_length=1,default='0',choices=Day_CHOICES,null=True)
+	Actual_time=models.CharField(max_length=1,default='$',choices=Time_CHOICES,null=True)
+	Actual_day=models.CharField(max_length=1,default='$',choices=Day_CHOICES,null=True)
+
+	past_Actual_time=models.CharField(max_length=1,default='$',choices=Time_CHOICES,null=True)
+	past_Actual_day=models.CharField(max_length=1,default='$',choices=Day_CHOICES,null=True)
 
 	Venue = models.CharField(max_length=1,choices=Venue_choices,default='1')
 	
@@ -54,9 +57,24 @@ class Event(models.Model):
 	
 
 	def save(self, *args, **kwargs):
-		super(ModelClass, self).save(*args, **kwargs)
-		#event_list=Event.objects.all()
-		#applybpm(event_list)
+		print "dsadfafsdsfdsfadsgagfgfb"
+		temp = self
+
+		super(Event, self).save(*args, **kwargs)
+		print self.past_Actual_time
+		print temp.Actual_time
+		print "amit"
+
+		if temp.Actual_time != self.past_Actual_time or temp.Actual_day != self.past_Actual_day  :
+			u = self.participants.all()
+			print u
+			receivers = []
+			for user in u:
+				xx = User.objects.get(username = user).email
+				receivers.append(xx)
+			#print xx
+			send_notif.sendmail_to_registered(receivers,self.name,self.event_coordi,self.contact_id_coordinator,self.Venue)
+
 
 
 	def participants_list(self):
