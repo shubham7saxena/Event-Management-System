@@ -1,0 +1,55 @@
+Building PySoy on Windows
+by Kirk McDonald
+
+You will need:
+
+* A C compiler. I use MinGW. (Versions 3.4.2 and 5.1.3 have been tested to
+work.) Visual Studio will probably work, though it is untested.
+
+* Download the Windows dependencies package from
+http://www.pysoy.org/releases/windows_deps-1.0_beta3.zip and follow the README.
+
+* Ensure that the Python installation dir and MinGW's bin folder (if you use
+MinGW) are on the path.
+
+Pyrex 0.9.6.4 fix:
+
+There is a bug in 0.9.6.4 which causes PySoy's compilation to fail on Windows.
+In the file Pyrex\Compiler\Parsing.py, line 1191 reads:
+
+        result = PassStatNode(pos)
+
+Change this to:
+
+        result = Nodes.PassStatNode(pos)
+
+Building:
+
+Distutils gets a little strange when compiling with MinGW. To build PySoy, you
+should issue the following command:
+
+> python setup.py build --compiler=mingw32
+
+To install PySoy into site-packages, you should issue the following command:
+
+> python setup.py build --compiler=mingw32 install
+
+If you are using Visual C++, the usual "python setup.py install" should work.
+
+Note that, when you "import soy", the DLLs for PySoy's various dependencies
+will need to be somewhere on the DLL search path. If you've followed the README
+in the Windows dependencies package, it should automatically work. Otherwise,
+the easiest place to put them is in the 'soy' directory under
+Python25\Lib\site-packages\ (next to the compiled .pyd files), though anywhere
+on the PATH will work.
+
+Building the Installer:
+
+This is a four-step process.
+
+1) Build PySoy.
+2) Copy the 'examples' directory into the build\lib.plat-version\soy directory.
+3) Copy the various DLL dependencies into that directory, too.
+4) Issue the following command:
+> python setup.py build --compiler=mingw32 bdist_wininst --install-script=win32_postinstall.py
+

@@ -19,13 +19,18 @@
             <!-- Display each form here -->
 
             {% for field in user_form.visible_fields %}
-            {{ field.errors }}
+            <div style = "color:red">
+                {{ field.errors }}
+            </div>
             {{ field.help_text}}<br/>
             {{ field }}<br/>
             {% endfor %}
 
             {% for field in profile_form.visible_fields %}
-            {{ field.errors }}
+            <div style = "color:red">
+                {{ field.errors }}
+            </div>
+           <!--  {{ field.errors }} -->
 
             {{ field.help_text}}<br/>
             {{ field }}<br/>

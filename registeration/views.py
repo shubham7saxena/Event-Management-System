@@ -204,6 +204,7 @@ def run_bpm(request):
     context_dict = {}
     context_dict['events'] = event_list
     context_dict['count'] = count
+    context_dict['user'] = User.objects.get(username = request.user)
 
     return render_to_response('registeration/indexAdmin.html',context_dict)
 

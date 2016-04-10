@@ -41,7 +41,7 @@
 
             <div class="nav-collapse collapse">
                 <ul class="nav pull-right">
-                    {% if user.is_authenticated or user.is_staff %}
+                    {% if user.is_authenticated or user.is_staff  or user.is_superuser%}
                     <li class="navbar-text">Welcome, {{ user.username }}!</li>
                     <li><a href="/registeration/profile/">Profile</a></li>
                     <li><a href="/registeration/logout/">Logout</a></li>

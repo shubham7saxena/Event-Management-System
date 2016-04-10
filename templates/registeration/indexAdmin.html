@@ -1,21 +1,7 @@
 {% extends "registeration/base.html" %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-
 
 {% block body_block %}
-<style type="text/css">
-.hero-unit {
-  padding-top: 0px; !important 
-  margin-top: -21%;
-  margin-bottom: 0%;
-
-  /*padding: 60px;  default is 60px; */
-
-}</style>
-
 
 <script>
 $(document).ready(function(){
@@ -30,19 +16,19 @@ $(document).ready(function(){
     <h1>Event Management System</h1>
     <br>
     <input type="button" value="Schedule Events" id = "schedule"/>
-
 </div>
 
 <p style="margin-left: 65px;"><strong> Events that have been scheduled:-</strong></p>
-<div class="hero-unit" style = "margin-top: -21%;">
+<div class="hero-unit" style = "margin-top: -40%;">
     <table class="table table-bordered">
     <thead>
       <tr>
         <th>Event Name</th>
-        <th>1st Prefernce </th>
-        <th>2nd Prefernce </th>
-        <th>3rd Prefernce </th>
+        <th>1st Preference </th>
+        <th>2nd Preference </th>
+        <th>3rd Preference </th>
         <th>Actual Timings </th>
+        <th>Venue</th>
       </tr>
     </thead>
     {% for event in events%}
@@ -53,9 +39,12 @@ $(document).ready(function(){
             <td>{{ event.name }}</td>
 
                 <td> {{event.get_first_day_preference_display }}, {{event.get_first_time_preference_display }}</td>
-                <td> {{event.get_second_day_preference_display }}, {{event.get_second_time_preference_display }}</td>
+                <td> {{event.get_second_day_preference_display }}, {{event.get_second_time_preference_display }}
+                </td>
                 <td> {{event.get_third_day_preference_display }}, {{event.get_third_time_preference_display }}</td>
                 <td> {{ event.get_Actual_day_display }},{{ event.get_Actual_time_display }}</td>
+                <td> {{ event.get_Venue_display }}</td>
+                
             </tr>
             {% else %}
             {% endif %}
@@ -66,27 +55,30 @@ $(document).ready(function(){
 
     {% if count %}
 
-    <p>Events that can't be scheduled because all the preferrd timing slots are clashing with some other event .</p>
-
+</div>
+<p>Events that can't be scheduled because all the preferred timing slots are clashing with some other event .</p>
+<br>
+<div style = "margin-top :-25%;">
     <table class="table table-bordered">
     <thead>
       <tr>
         <th>Event Name</th>
-        <th>1st Prefernce </th>
-        <th>2nd Prefernce </th>
-        <th>3rd Prefernce </th>
+        <th>1st Preference </th>
+        <th>2nd Preference </th>
+        <th>3rd Preference </th>
       </tr>
     </thead>
     {% for event in events%}
         <!-- <div> -->
 
-            <tr>
+           
             {% if event.get_Actual_time_display == '$'%} 
-            <td>{{ event.name }}</td>
+            <tr>
+                <td style = "color : red; ">{{ event.name }}</td>
 
-                <td> {{event.get_first_day_preference_display }}, {{event.get_first_time_preference_display }}</td>
-                <td> {{event.get_second_day_preference_display }}, {{event.get_second_time_preference_display }}</td>
-                <td> {{event.get_third_day_preference_display }}, {{event.get_third_time_preference_display }}</td>
+                    <td style = "color : red; "> {{event.get_first_day_preference_display }}, {{event.get_first_time_preference_display }}</td>
+                    <td style = "color : red; "> {{event.get_second_day_preference_display }}, {{event.get_second_time_preference_display }}</td>
+                    <td style = "color : red; "> {{event.get_third_day_preference_display }}, {{event.get_third_time_preference_display }}</td>
             </tr>
             {% else %}
             {% endif %}
