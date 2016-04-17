@@ -1,9 +1,7 @@
 from .models import Profile, Event
 from collections import OrderedDict
 
-#graph = {'a': {1}, 'b': {1, 2}, 'c': {1, 2}, 'd': {2, 3, 4}, 'e': {3, 4}, 'f': {4, 5, 6},'g': {5, 6, 7}, 'h': {8}}
-
-
+# Macthing According to the Venue
 def Max_bpm(graph):
 		matching = {}
 		for u in graph:
@@ -13,11 +11,6 @@ def Max_bpm(graph):
 					break
 		
 		while 1:
-			# structure residual graph into layers
-			# pred[u] gives the neighbor in the previous layer for u in U
-			# preds[v] gives a list of neighbors in the previous layer for v in V
-			# unmatched gives a list of unmatched vertices in final layer of V,
-			# and is also used as a flag value for pred[u] when u is in the first layer
 			preds = {}
 			unmatched = []
 			pred = dict([(u,unmatched) for u in graph])
@@ -41,7 +34,6 @@ def Max_bpm(graph):
 					else:
 						unmatched.append(v)
 			
-			# did we finish layering without finding any alternating paths?
 			if not unmatched:
 				unlayered = {}
 				for u in graph:
@@ -50,8 +42,6 @@ def Max_bpm(graph):
 							unlayered[v] = None
 				return (matching,list(pred),list(unlayered))
 
-			# recursively search backward through layers to find alternating paths
-			# recursion returns true if found path, false otherwise
 			def recurse(v):
 				if v in preds:
 					L = preds[v]
